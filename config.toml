@@ -1,0 +1,28 @@
+# Quota Monitor configuration. Copy to config.toml.
+# The panel lists providers in the order they appear here. Set enabled = false to hide one.
+
+[general]
+database = "data/quota.db"
+poll_interval_minutes = 5
+
+# Sign in from the tray menu (Sign in to Claude).
+[providers.claude]
+enabled = true
+
+# Sign in from the tray menu (Sign in to Codex).
+[providers.codex]
+enabled = true
+
+# Sign in from the tray menu (Sign in to Antigravity).
+[providers.antigravity]
+enabled = true
+
+# Requires COMMANDCODE_COOKIE in .env.
+[providers.commandcode]
+enabled = true
+cookie_env = "COMMANDCODE_COOKIE"
+
+# Requires DEEPSEEK_API_KEY in .env.
+[providers.deepseek]
+enabled = true
+api_key_env = "DEEPSEEK_API_KEY"
