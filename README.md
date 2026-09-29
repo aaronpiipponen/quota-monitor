@@ -1,14 +1,16 @@
 # Quota Monitor
 
+<img src="docs/UI.png" alt="Quota Monitor panel" width="60%">
+
 A tray app for Windows and Linux that shows AI usage limits in one panel.
 
-| Provider | Shows | Credentials |
-|---|---|---|
-| Claude | 5h, weekly, per-model weekly | Sign in from the tray menu |
-| Codex | 5h, weekly, model-specific; credits | Sign in from the tray menu |
-| Antigravity | Gemini and Claude/GPT groups: 5h, weekly | Sign in from the tray menu |
-| Command Code | 5h, weekly, monthly | Cookie in `.env` |
-| DeepSeek | Prepaid balance | API key in `.env` |
+- **Claude**: 5h, weekly and per-model weekly limits
+- **Codex**: 5h, weekly and model-specific limits, credits
+- **Antigravity**: 5h and weekly limits for the Gemini and Claude/GPT groups
+- **Command Code**: 5h, weekly and monthly limits
+- **DeepSeek**: prepaid balance
+
+Claude, Codex and Antigravity are signed in from the tray menu. Command Code and DeepSeek use credentials in `.env`.
 
 ## Setup (once)
 
