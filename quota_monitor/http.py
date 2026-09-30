@@ -32,10 +32,10 @@ class HttpError(Exception):
         self.body = body
 
 
-def _send(request: urllib.request.Request, url: str, timeout: float) -> Any:
+def _read(request: urllib.request.Request, url: str, timeout: float) -> bytes:
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
-            payload = response.read()
+            return response.read()
     # HTTPError is a subclass of URLError, so it must be handled first.
     except urllib.error.HTTPError as exc:
         try:
@@ -48,6 +48,9 @@ def _send(request: urllib.request.Request, url: str, timeout: float) -> Any:
     except TimeoutError as exc:
         raise HttpError(f"Timed out after {timeout:.0f}s contacting {url}") from exc
 
+
+def _send(request: urllib.request.Request, url: str, timeout: float) -> Any:
+    payload = _read(request, url, timeout)
     try:
         return json.loads(payload)
     except (json.JSONDecodeError, UnicodeDecodeError) as exc:
@@ -84,3 +87,11 @@ def post_json(url: str, payload: Any, headers: Optional[dict[str, str]] = None,
     data = json.dumps(payload).encode("utf-8")
     request = urllib.request.Request(url, data=data, headers=request_headers, method="POST")
     return _send(request, url, timeout)
+
+
+def get_text(url: str, headers: Optional[dict[str, str]] = None, timeout: float = 20.0) -> str:
+    """Perform a GET request and return the body as text (for HTML pages)."""
+    request_headers = {"Accept": "text/html,*/*", "User-Agent": USER_AGENT}
+    request_headers.update(headers or {})
+    payload = _read(urllib.request.Request(url, headers=request_headers, method="GET"), url, timeout)
+    return payload.decode("utf-8", "replace")

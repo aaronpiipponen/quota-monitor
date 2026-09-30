@@ -16,6 +16,7 @@ _PROVIDERS = {
     "antigravity": ("Antigravity", "#2BC4A0"),
     "commandcode": ("Command Code", "#A78BFA"),
     "deepseek": ("DeepSeek", "#5B7CFA"),
+    "opencode_go": ("OpenCode Go", "#E8E8E8"),
 }
 _DEFAULT_COLOR = "#9AA0A6"
 

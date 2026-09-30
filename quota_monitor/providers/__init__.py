@@ -10,10 +10,12 @@ from .claude import ClaudeProvider
 from .codex import CodexProvider
 from .commandcode import CommandCodeProvider
 from .deepseek import DeepSeekProvider
+from .opencode_go import OpenCodeGoProvider
 
 PROVIDERS: dict[str, type[Provider]] = {
     cls.name: cls
-    for cls in (AntigravityProvider, ClaudeProvider, CodexProvider, CommandCodeProvider, DeepSeekProvider)
+    for cls in (AntigravityProvider, ClaudeProvider, CodexProvider, CommandCodeProvider, DeepSeekProvider,
+                OpenCodeGoProvider)
 }
 
 # Providers that sign in through the browser: config key -> (menu label, login function).

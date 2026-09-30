@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Optional
 
-from ..http import get_json, post_form, post_json
+from ..http import get_json, get_text, post_form, post_json
 from ..models import Meter
 
 HttpGet = Callable[..., Any]
@@ -37,11 +37,12 @@ class Provider(ABC):
 
     def __init__(self, settings: dict[str, Any], http_get: HttpGet = get_json,
                  http_post: HttpPost = post_form, state_dir: Optional[Path] = None,
-                 http_post_json: HttpPost = post_json) -> None:
+                 http_post_json: HttpPost = post_json, http_get_text: HttpGet = get_text) -> None:
         self.settings = settings
         self.http_get = http_get
         self.http_post = http_post
         self.http_post_json = http_post_json
+        self.http_get_text = http_get_text
         self.state_dir = state_dir
 
     @abstractmethod

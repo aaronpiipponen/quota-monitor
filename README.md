@@ -1,7 +1,5 @@
 # Quota Monitor
 
-<img src="docs/UI.png" alt="Quota Monitor panel" width="60%">
-
 A tray app for Windows and Linux that shows AI usage limits in one panel.
 
 - **Claude**: 5h, weekly and per-model weekly limits
@@ -9,8 +7,13 @@ A tray app for Windows and Linux that shows AI usage limits in one panel.
 - **Antigravity**: 5h and weekly limits for the Gemini and Claude/GPT groups
 - **Command Code**: 5h, weekly and monthly limits
 - **DeepSeek**: prepaid balance
+- **OpenCode Go**: 5h, weekly and monthly limits
 
-Claude, Codex and Antigravity are signed in from the tray menu. Command Code and DeepSeek use credentials in `.env`.
+Claude, Codex and Antigravity are signed in from the tray menu. Command Code, DeepSeek and OpenCode Go use credentials in `.env`.
+
+<p align="center">
+  <img src="docs/UI.png" alt="Quota Monitor panel" width="300">
+</p>
 
 ## Setup (once)
 
@@ -59,10 +62,19 @@ Left-click the tray icon to open or close the panel. The icon's ring shows the h
 
 Repeat if the panel reports an expired Command Code session.
 
+**OpenCode Go:**
+1. Sign in at https://opencode.ai and open your workspace's **Go** page.
+2. Set `OPENCODE_WORKSPACE=` to that page's URL (or just the id after `/workspace/`).
+3. Press F12, open the **Network** tab, reload, and click the first request (the page itself).
+4. Under **Request Headers**, copy the `auth=...` part of the `Cookie` value.
+5. Set `OPENCODE_COOKIE=auth=<value>` in `.env` and choose **Refresh now** in the tray menu.
+
+Repeat if the panel reports an expired OpenCode session.
+
 ## Notes
 
 - Sign-ins are stored in `data/auth/`. Deleting a file there signs that provider out.
 - Google's terms prohibit using Antigravity sign-ins in software other than Google's; accounts have been suspended for it.
-- The Claude, Codex, Antigravity and Command Code endpoints are undocumented and can change. A failing provider shows its error in the panel along with its last known values.
+- The Claude, Codex, Antigravity and Command Code endpoints are undocumented, and OpenCode Go usage is read from its web page; any of these can change. A failing provider shows its error in the panel along with its last known values.
 - Errors from the background process are written to `data/tray.log`.
 - Moving the project folder: untick and re-tick **Start at login**.
