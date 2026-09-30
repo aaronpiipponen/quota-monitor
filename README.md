@@ -63,9 +63,9 @@ Left-click the tray icon to open or close the panel. The icon's ring shows the h
 Repeat if the panel reports an expired Command Code session.
 
 **OpenCode Go:**
-1. Sign in at https://opencode.ai and open your workspace's **Go** page.
-2. Set `OPENCODE_WORKSPACE=` to that page's URL (or just the id after `/workspace/`).
-3. Press F12, open the **Network** tab, reload, and click the first request (the page itself).
+1. Sign in at https://opencode.ai/console and open the **Go** page.
+2. Press F12, open the **Network** tab, select **Fetch/XHR** and reload.
+3. Click the `status` request.
 4. Under **Request Headers**, copy the `auth=...` part of the `Cookie` value.
 5. Set `OPENCODE_COOKIE=auth=<value>` in `.env` and choose **Refresh now** in the tray menu.
 
@@ -75,6 +75,6 @@ Repeat if the panel reports an expired OpenCode session.
 
 - Sign-ins are stored in `data/auth/`. Deleting a file there signs that provider out.
 - Google's terms prohibit using Antigravity sign-ins in software other than Google's; accounts have been suspended for it.
-- The Claude, Codex, Antigravity and Command Code endpoints are undocumented, and OpenCode Go usage is read from its web page; any of these can change. A failing provider shows its error in the panel along with its last known values.
+- The Claude, Codex, Antigravity, Command Code and OpenCode Go endpoints are undocumented and can change. A failing provider shows its error in the panel along with its last known values.
 - Errors from the background process are written to `data/tray.log`.
 - Moving the project folder: untick and re-tick **Start at login**.

@@ -88,10 +88,3 @@ def post_json(url: str, payload: Any, headers: Optional[dict[str, str]] = None,
     request = urllib.request.Request(url, data=data, headers=request_headers, method="POST")
     return _send(request, url, timeout)
 
-
-def get_text(url: str, headers: Optional[dict[str, str]] = None, timeout: float = 20.0) -> str:
-    """Perform a GET request and return the body as text (for HTML pages)."""
-    request_headers = {"Accept": "text/html,*/*", "User-Agent": USER_AGENT}
-    request_headers.update(headers or {})
-    payload = _read(urllib.request.Request(url, headers=request_headers, method="GET"), url, timeout)
-    return payload.decode("utf-8", "replace")

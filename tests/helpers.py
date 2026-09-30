@@ -38,6 +38,3 @@ class FakeHttp:
         self.calls.append(("POST_JSON", url, headers or {}, payload))
         return self._reply(url)
 
-    def get_text(self, url, headers=None, timeout=20.0):
-        self.calls.append(("GET_TEXT", url, headers or {}, None))
-        return self._reply(url)

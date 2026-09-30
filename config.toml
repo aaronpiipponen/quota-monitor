@@ -31,4 +31,3 @@ api_key_env = "DEEPSEEK_API_KEY"
 [providers.opencode_go]
 enabled = true
 cookie_env = "OPENCODE_COOKIE"
-workspace_env = "OPENCODE_WORKSPACE"
