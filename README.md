@@ -64,10 +64,10 @@ Repeat if the panel reports an expired Command Code session.
 
 **OpenCode Go:**
 1. Sign in at https://opencode.ai/console and open the **Go** page.
-2. Press F12, open the **Network** tab, select **Fetch/XHR** and reload.
-3. Click the `status` request.
-4. Under **Request Headers**, copy the `auth=...` part of the `Cookie` value.
-5. Set `OPENCODE_COOKIE=auth=<value>` in `.env` and choose **Refresh now** in the tray menu.
+2. Set `OPENCODE_ORG=` to that page's URL (it contains `org_...`).
+3. Press F12, open the **Network** tab, select **Fetch/XHR** and reload.
+4. Click the `status` request and, under **Request Headers**, copy the whole `Cookie` value.
+5. Set `OPENCODE_COOKIE=<copied value>` in `.env` and choose **Refresh now** in the tray menu.
 
 Repeat if the panel reports an expired OpenCode session.
 

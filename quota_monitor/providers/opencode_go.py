@@ -2,13 +2,15 @@
 
 Data source: the endpoint the OpenCode console uses for its Go page,
 ``GET https://opencode.ai/console/api/go/status`` (undocumented), authenticated with
-the console's ``auth`` session cookie. Each meter reports a limit and the amount used
+the console's session cookies and the ``X-Org-Id`` header (the ``org_...`` id from
+the console URL). Each meter reports a limit and the amount used
 in micro-cents, plus its reset time. A 5-hour window that has not started yet has no
 reset time and zero usage.
 """
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from ..http import HttpError
@@ -17,7 +19,15 @@ from .base import Provider, ProviderError, parse_timestamp, to_float
 
 STATUS_URL = "https://opencode.ai/console/api/go/status"
 _METERS = (("fiveHour", "five_hour", "5h"), ("week", "weekly", "Weekly"), ("month", "monthly", "Monthly"))
-EXPIRED = "OpenCode session has expired. Copy a fresh 'auth' cookie into OPENCODE_COOKIE in .env."
+EXPIRED = "OpenCode session has expired. Copy a fresh Cookie value into OPENCODE_COOKIE in .env."
+
+
+def org_id(value: str) -> str:
+    """Accept either an org id or a console URL containing it."""
+    match = re.search(r"org_[A-Za-z0-9]+", value)
+    if not match:
+        raise ProviderError("OPENCODE_ORG must be the org_... id or the console URL containing it.")
+    return match.group(0)
 
 
 def normalize_cookie(raw: str) -> str:
@@ -52,13 +62,15 @@ class OpenCodeGoProvider(Provider):
 
     def fetch(self) -> list[Meter]:
         cookie = normalize_cookie(self.require_secret("cookie"))
+        org = org_id(self.require_secret("org"))
         try:
-            data = self.http_get(STATUS_URL, headers={"Cookie": cookie})
+            data = self.http_get(STATUS_URL, headers={"Cookie": cookie, "X-Org-Id": org})
         except HttpError as exc:
             # An expired session is answered with 401/403 or redirected to the HTML login page.
             if exc.status in (401, 403) or (exc.status is None and "not valid JSON" in str(exc)):
                 raise ProviderError(EXPIRED) from exc
-            raise ProviderError(str(exc)) from exc
+            detail = f" OpenCode says: {exc.body.strip()[:160]}" if exc.body.strip() else ""
+            raise ProviderError(f"{exc}.{detail}") from exc
         meters = parse_status(data)
         if not meters:
             raise ProviderError("The Go status response contained no usage meters.")
