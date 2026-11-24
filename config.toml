@@ -27,7 +27,7 @@ cookie_env = "COMMANDCODE_COOKIE"
 enabled = true
 api_key_env = "DEEPSEEK_API_KEY"
 
-# Requires OPENCODE_WORKSPACE and OPENCODE_COOKIE in .env.
+# Requires OPENCODE_ORG and OPENCODE_COOKIE in .env.
 [providers.opencode_go]
 enabled = true
 org_env = "OPENCODE_ORG"
