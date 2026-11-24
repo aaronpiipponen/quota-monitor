@@ -1,4 +1,4 @@
-# Quota Monitor configuration. Copy to config.toml.
+# Quota Monitor configuration.
 # The panel lists providers in the order they appear here. Set enabled = false to hide one.
 
 [general]
