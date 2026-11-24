@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/docs/brand/logo.png" alt="quota-monitor" width="360">
+  <img src="/docs/brand/logo.png" alt="quota-monitor" width="480">
 </p>
 
 <p align="center">
